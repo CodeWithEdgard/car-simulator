@@ -27,6 +27,20 @@ public class CarServicesImpl implements CarService {
         carro.setLigado(true);
     }
 
+    // O carro podera ser desligado se estiver em ponto morto (marcha 0) e sua velocidade em 0 km
+    @Override
+    public void desligarCarro() {
+
+        if (carro.getVelocidade() != 0) {
+            throw new CarDesligadoException(
+                    "Não é possivel desligar o carro caso esteja com velocidade > 0");
+
+        }
+
+        carro.setLigado(false);
+
+    }
+
     // Quando o carro for acelerado ele deve incrementar 1km em sua velocidade (pode chegar no
     // máximo a 120km);
     @Override
@@ -55,11 +69,6 @@ public class CarServicesImpl implements CarService {
 
     @Override
     public void trocarMarcha() {}
-
-
-
-    @Override
-    public void desligarCarro() {}
 
 
 
