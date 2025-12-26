@@ -7,11 +7,11 @@ public class Car {
     private int velocidade;
 
 
-    public Car() {}
-
-    public Car(boolean ligado, int velocidade) {
-        this.ligado = ligado;
-        this.velocidade = velocidade;
+    public Car() {
+        // Quando o carro for criado ele deve começar desligado, em ponto morto e com sua velocidade
+        // em 0
+        this.ligado = false;
+        this.velocidade = 0;
     }
 
     public boolean getLigado() {
