@@ -61,14 +61,34 @@ public class CarServicesImpl implements CarService {
         Log.info("Voce aumentou a velocidade, estamos em: " + carro.getVelocidade());
     }
 
+    // Quando diminuir a velocidade do carro ele deve decrementar 1 km de sua velocidade (pode
+    // chegar no minimo a 0km);
+    @Override
+    public void diminuirVelocidade() {
+
+        if (!carro.getLigado()) {
+
+            throw new CarDesligadoException(
+                    "Carro esta desligado não e possivel fazer nenhuma ação");
+        }
+
+        if (carro.getVelocidade() == 0) {
+
+            throw new PontoMortoException("Velocidade minima");
+
+        }
+
+        carro.setVelocidade(carro.getVelocidade() - 1);
+        Log.info("Voce diminuiu a velocidade, estamos em: " + carro.getVelocidade());
+
+    }
+
+
 
     @Override
-    public void diminuirVelocidade() {}
-
-
-
-    @Override
-    public void trocarMarcha() {}
+    public void trocarMarcha() {
+        
+    }
 
 
 
