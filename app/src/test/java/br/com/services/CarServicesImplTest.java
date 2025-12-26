@@ -1,6 +1,7 @@
 package br.com.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,7 +72,28 @@ public class CarServicesImplTest {
 
         assertTrue(e.getMessage().contains("no ponto morto para ligar"));
 
-
     }
 
+    @Test
+    public void desligarOcarroComSucesso() {
+
+        service.ligarCarro();
+
+        service.desligarCarro();
+
+        assertFalse(carro.getLigado());
+    }
+
+    @Test
+    public void desligarOcarroCarDesligadoException() {
+
+        service.ligarCarro();
+
+        service.acelerar();
+
+        CarDesligadoException e =
+                assertThrows(CarDesligadoException.class, () -> service.desligarCarro());
+
+        assertFalse(e.getMessage().equals("Não é possivel desligar o carro"));
+    }
 }
