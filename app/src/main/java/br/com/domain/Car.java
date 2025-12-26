@@ -1,10 +1,14 @@
 package br.com.domain;
 
+import br.com.domain.enums.Marcha;
+
 public class Car {
 
     private boolean ligado;
 
     private int velocidade;
+
+    private Marcha marcha;
 
 
     public Car() {
@@ -12,6 +16,7 @@ public class Car {
         // em 0
         this.ligado = false;
         this.velocidade = 0;
+        this.marcha = marcha.PONTO_MORTO;
     }
 
     public boolean getLigado() {
@@ -30,10 +35,11 @@ public class Car {
         this.velocidade = velocidade;
     }
 
-    @Override
-    public String toString() {
+    public Marcha getMarcha() {
+        return this.marcha;
+    }
 
-        return "Car{" + "ligado=" + ligado + ", velocidade=" + velocidade + '}';
-
+    public void setMarcha(Marcha marcha) {
+        this.marcha = marcha;
     }
 }
