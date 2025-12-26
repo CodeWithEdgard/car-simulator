@@ -2,7 +2,7 @@
 
 **Simulador de controle de carro com máquina de estados e regras realistas em Java.**
 
-Projeto de estudo focado em modelar comportamento complexo com validações rigorosas, arquitetura limpa e testes unitários automatizados.
+Projeto de estudo focado em modelar comportamento complexo, aplicar boas práticas de orientação a objetos e construir uma base sólida para projetos Java backend.
 
 ### Objetivo do Projeto
 
@@ -17,6 +17,7 @@ Praticar conceitos avançados de Java de forma progressiva:
 - Gerenciamento de build com **Maven**
 - **Testes unitários** com JUnit 5
 - Cobertura de testes com **JaCoCo**
+- CI com GitHub Actions
 
 ### Regras do Simulador (conforme o exercício)
 
@@ -62,6 +63,8 @@ src/main/java/br/com/zpx/car/
 
 ### Cobertura de Testes (JaCoCo)
 
+![alt text](image.png)
+
 > Gerado com `mvn clean test jacoco:report`
 
 ### Como Executar
@@ -82,17 +85,6 @@ mvn exec:java -Dexec.mainClass="br.com.zpx.car.presentation.DemoConsole"
 [main] INFO  br.com.zpx.car.service.CarServiceImpl - Trocando para 2ª marcha
 [main] INFO  br.com.zpx.car.service.CarServiceImpl - Vruuum! Virando à esquerda
 ```
-
-### Próximos Passos Planejados
-
-- Adicionar combustível e consumo
-- Implementar marcha ré
-- Simular freio de mão e luzes
-- Transformar em API REST com Javalin
-- Migrar para Spring Boot
-- GitHub Actions com badges automáticos
-
----
 
 **Projeto feito com dedicação como parte da jornada de aprendizado em Java backend.**
 
