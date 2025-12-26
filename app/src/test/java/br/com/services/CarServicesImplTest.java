@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import br.com.domain.Car;
+import br.com.domain.enums.Marcha;
 import br.com.exception.CarDesligadoException;
 import br.com.exception.PontoMortoException;
 import br.com.exception.VelocidadeMaximaException;
@@ -27,7 +28,10 @@ public class CarServicesImplTest {
     @Test
     public void deveAcelerarComSucesso() {
 
-        carro.setLigado(true);
+        service.ligarCarro();
+
+        service.trocarMarcha(Marcha.PRIMEIRA);
+
         service.acelerar();
 
         assertEquals(1, carro.getVelocidade());
@@ -46,7 +50,7 @@ public class CarServicesImplTest {
     @Test
     public void acelerarVelocidadeMaximaException() {
 
-        carro.setLigado(true);
+        service.ligarCarro();
         carro.setVelocidade(120);
 
         VelocidadeMaximaException e =
@@ -89,6 +93,8 @@ public class CarServicesImplTest {
 
         service.ligarCarro();
 
+        service.trocarMarcha(Marcha.PRIMEIRA);
+
         service.acelerar();
 
         CarDesligadoException e =
@@ -127,5 +133,16 @@ public class CarServicesImplTest {
                 assertThrows(PontoMortoException.class, () -> service.diminuirVelocidade());
 
         assertTrue(e.getMessage().contains("Velocidade minima"));
+    }
+
+    @Test
+    public void deveTrocarMarchaComSucesso() {
+
+        service.ligarCarro();
+
+        service.trocarMarcha(Marcha.PRIMEIRA);
+
+        assertEquals(Marcha.PRIMEIRA, carro.getMarcha());
+        
     }
 }
