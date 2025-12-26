@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import br.com.domain.Car;
 import br.com.exception.CarDesligadoException;
+import br.com.exception.PontoMortoException;
 import br.com.exception.VelocidadeMaximaException;
 
 public class CarServicesImplTest {
@@ -51,6 +52,26 @@ public class CarServicesImplTest {
                 assertThrows(VelocidadeMaximaException.class, () -> service.acelerar());
 
         assertTrue(e.getMessage().contains("velocidade Maxima"));
+    }
+
+    @Test
+    public void ligarOcarroComSucesso() {
+
+        service.ligarCarro();
+
+        assertTrue(carro.getLigado());
+    }
+
+    @Test
+    public void ligarOcarroPontoMortoException() {
+
+        carro.setVelocidade(100);
+
+        PontoMortoException e = assertThrows(PontoMortoException.class, () -> service.ligarCarro());
+
+        assertTrue(e.getMessage().contains("no ponto morto para ligar"));
+
+
     }
 
 }

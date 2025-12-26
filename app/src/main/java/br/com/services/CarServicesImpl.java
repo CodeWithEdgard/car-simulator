@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import br.com.domain.Car;
 import br.com.exception.CarDesligadoException;
+import br.com.exception.PontoMortoException;
 import br.com.exception.VelocidadeMaximaException;
 
 public class CarServicesImpl implements CarService {
@@ -14,6 +15,16 @@ public class CarServicesImpl implements CarService {
 
     public CarServicesImpl(Car carro) {
         this.carro = carro;
+    }
+
+    @Override
+    public void ligarCarro() {
+
+        if (carro.getVelocidade() != 0) {
+            throw new PontoMortoException("O carro precisa estar no ponto morto para ligar");
+        }
+
+        carro.setLigado(true);
     }
 
     // Quando o carro for acelerado ele deve incrementar 1km em sua velocidade (pode chegar no
@@ -29,7 +40,7 @@ public class CarServicesImpl implements CarService {
 
         if (carro.getVelocidade() >= 120) {
             throw new VelocidadeMaximaException(
-                    "Não é possivel acelerar, alcançado  velocidade Maxima");
+                    "Não é possivel acelerar, alcançado  velocidade Maxima 120km");
         }
 
         carro.setVelocidade(carro.getVelocidade() + 1);

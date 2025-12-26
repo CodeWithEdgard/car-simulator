@@ -2,6 +2,8 @@ package br.com.services;
 
 public interface CarService {
 
+    void ligarCarro();
+
     void acelerar();
 
     void diminuirVelocidade();
