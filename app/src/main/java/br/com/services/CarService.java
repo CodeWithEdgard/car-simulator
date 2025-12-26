@@ -1,5 +1,7 @@
 package br.com.services;
 
+import br.com.domain.enums.Marcha;
+
 public interface CarService {
 
     void ligarCarro();
@@ -8,7 +10,7 @@ public interface CarService {
 
     void diminuirVelocidade();
 
-    void trocarMarcha();
+    void trocarMarcha(Marcha trocarMarcha);
 
     void desligarCarro();
 
