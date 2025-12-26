@@ -3,6 +3,7 @@ package br.com.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import br.com.domain.Car;
+import br.com.domain.enums.Marcha;
 import br.com.exception.CarDesligadoException;
 import br.com.exception.PontoMortoException;
 import br.com.exception.VelocidadeMaximaException;
@@ -57,8 +58,22 @@ public class CarServicesImpl implements CarService {
                     "Não é possivel acelerar, alcançado  velocidade Maxima 120km");
         }
 
-        carro.setVelocidade(carro.getVelocidade() + 1);
-        Log.info("Voce aumentou a velocidade, estamos em: " + carro.getVelocidade());
+        if (carro.getMarcha() == Marcha.PONTO_MORTO) {
+            throw new PontoMortoException("Para acelerar precisa sair do ponto morto");
+        }
+
+        if (carro.getMarcha() == Marcha.PRIMEIRA) {
+
+            if (carro.getVelocidade() < 0 || carro.getVelocidade() > 19) {
+                throw new VelocidadeMaximaException(
+                        "velocidade maxima alcanda na primeira, troque de marcha");
+            }
+
+            carro.setVelocidade(carro.getVelocidade() + 1);
+            Log.info("Voce aumentou a velocidade, estamos em: " + carro.getVelocidade());
+        }
+
+        // TO DO (fazer para as outras marchas, e analisar algo para diminuir os if)
     }
 
     // Quando diminuir a velocidade do carro ele deve decrementar 1 km de sua velocidade (pode
@@ -84,10 +99,19 @@ public class CarServicesImpl implements CarService {
     }
 
 
-
+    // o carro deve possuir 6 marchas, não deve ser permitido pular uma marcha no carro;
     @Override
-    public void trocarMarcha() {
-        
+    public void trocarMarcha(Marcha trocaMarcha) {
+
+        Marcha marchaAtual = trocaMarcha;
+
+        if (marchaAtual.equals(null)) {
+
+            throw new NullPointerException("Por favor escolha uma marcha");
+        }
+
+        carro.setMarcha(marchaAtual);
+
     }
 
 
