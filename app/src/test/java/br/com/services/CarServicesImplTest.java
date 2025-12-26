@@ -96,4 +96,36 @@ public class CarServicesImplTest {
 
         assertFalse(e.getMessage().equals("Não é possivel desligar o carro"));
     }
+
+    @Test
+    public void diminuirVelocidadeComSucesso() {
+
+        service.ligarCarro();
+
+        carro.setVelocidade(110);
+
+        service.diminuirVelocidade();
+
+        assertEquals(109, carro.getVelocidade());
+    }
+
+    @Test
+    public void diminuirVelocidadeComCarroDesligadoLancaException() {
+
+        CarDesligadoException e =
+                assertThrows(CarDesligadoException.class, () -> service.diminuirVelocidade());
+
+        assertTrue(e.getMessage().contains("Carro esta desligado"));
+    }
+
+    @Test
+    public void diminuirVelocidadeIgualAZeroLancaException() {
+
+        service.ligarCarro();
+
+        PontoMortoException e =
+                assertThrows(PontoMortoException.class, () -> service.diminuirVelocidade());
+
+        assertTrue(e.getMessage().contains("Velocidade minima"));
+    }
 }
