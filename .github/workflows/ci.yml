@@ -22,7 +22,7 @@ jobs:
           java-version: "17"
 
       - name: Build e testes com Maven
-        working-directory: app
+        # working-directory: app
         run: mvn -B clean verify
 
       - name: Upload relatório JaCoCo como artifact (opcional)
