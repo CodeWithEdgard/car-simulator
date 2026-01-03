@@ -1,91 +1,138 @@
+<div align="center">
+  <img src="https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17">
+  <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Maven">
+  <img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=junit5&logoColor=white" alt="JUnit 5">
+  <img src="https://img.shields.io/badge/JaCoCo-3775A9?style=for-the-badge&logo=jacoco&logoColor=white" alt="JaCoCo">
+  <img src="https://img.shields.io/badge/SLF4J-Logging-blue?style=for-the-badge" alt="SLF4J">
+  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions">
+</div>
+
 # Car Simulator 🚗💨
 
-**Simulador de controle de carro com máquina de estados e regras realistas em Java.**
+**Um simulador simples e realista de controle de carro em Java.**
 
-Projeto de estudo focado em modelar comportamento complexo, aplicar boas práticas de orientação a objetos e construir uma base sólida para projetos Java backend.
+Este projeto foi criado para praticar conceitos importantes de programação orientada a objetos e desenvolvimento backend em Java. Ele simula o comportamento de um carro manual com regras parecidas com as de um carro de verdade (marchas, velocidade limitada por marcha, etc.).
 
-### Objetivo do Projeto
+Perfeito para quem está aprendendo Java e quer ver na prática como aplicar boas práticas de código limpo, testes e organização de projeto.
 
-Praticar conceitos avançados de Java de forma progressiva:
+[Índice](#índice) • [O que o simulador faz](#o-que-o-simulador-faz) • [Regras principais](#regras-principais) • [Tecnologias usadas](#tecnologias-usadas) • [Estrutura do código](#estrutura-do-código) • [Como rodar](#como-rodar) • [Testes](#testes) • [Contato](#contato)
 
-- Modelagem de **máquina de estados** (state machine)
-- Validações interdependentes entre atributos (velocidade, marcha, ligado)
-- Separação de responsabilidades (SOLID)
+## Índice
+
+- [O que o simulador faz](#o-que-o-simulador-faz)
+- [Regras principais](#regras-principais)
+- [Tecnologias usadas](#tecnologias-usadas)
+- [Estrutura do código](#estrutura-do-código)
+- [Como rodar o projeto](#como-rodar-o-projeto)
+- [Testes e cobertura](#testes-e-cobertura)
+- [Contato e feedback](#contato-e-feedback)
+
+## O que o simulador faz
+
+Você pode controlar um carro virtual através de comandos simples:
+
+- Ligar e desligar o carro
+- Acelerar e frear (de 1 em 1 km/h)
+- Trocar de marcha (1ª até 6ª + ponto morto)
+- Virar à esquerda ou à direita
+
+O simulador **não deixa fazer coisas impossíveis**, como:
+
+- Trocar de marcha pulando etapas
+- Acelerar além do limite da marcha atual
+- Virar em alta velocidade
+- Desligar o carro em movimento
+
+Tudo isso é controlado por uma **máquina de estados** (state machine) e validações inteligentes — conceitos muito usados em sistemas reais.
+
+## Regras principais (bem simples)
+
+- O carro começa **desligado**, em **ponto morto** (marcha 0) e velocidade **0 km/h**.
+- Quando está desligado, nenhum comando funciona.
+- Acelerar ou frear muda a velocidade em **1 km/h** por vez.
+- Velocidade máxima: **120 km/h**.
+- Existem 6 marchas + ponto morto. Cada marcha tem um limite de velocidade:
+  - Ponto morto → só 0 km/h
+  - 1ª marcha → até 20 km/h
+  - 2ª marcha → até 40 km/h
+  - 3ª marcha → até 60 km/h
+  - 4ª marcha → até 80 km/h
+  - 5ª marcha → até 100 km/h
+  - 6ª marcha → até 120 km/h
+- Não pode pular marchas (ex: de 1ª direto pra 3ª).
+- Só pode virar entre **1 e 40 km/h**.
+- Só pode desligar o carro se estiver em ponto morto e parado.
+
+## Tecnologias usadas
+
+- **Java 17** → linguagem principal
+- **Maven** → para organizar e construir o projeto
+- **SLF4J** → para mostrar mensagens organizadas no console (logs)
+- **JUnit 5** → testes automáticos
+- **JaCoCo** → mede quanto do código está sendo testado
+- **GitHub Actions** → roda os testes automaticamente a cada mudança
+
+Boas práticas aplicadas:
+
+- Código organizado (SOLID)
 - Injeção de dependências manual
-- Tratamento de erros com exceções personalizadas
-- Logging profissional com SLF4J
-- Gerenciamento de build com **Maven**
-- **Testes unitários** com JUnit 5
-- Cobertura de testes com **JaCoCo**
-- CI com GitHub Actions
+- Exceções personalizadas
+- Constantes centralizadas
+- Programação para interfaces
 
-### Regras do Simulador (conforme o exercício)
+## Estrutura do código
 
-- Carro inicia **desligado**, em **ponto morto** (marcha 0) e velocidade **0 km/h**
-- Carro desligado **não executa nenhuma ação**
-- Acelerar/desacelerar altera velocidade em **1 km/h** por chamada
-- Velocidade máxima: **120 km/h**, mínima: **0 km/h**
-- 6 marchas + ponto morto
-- Velocidade limitada por marcha:
-  - Marcha 0 (ponto morto): 0 km/h
-  - 1ª: 0–20 km/h
-  - 2ª: 21–40 km/h
-  - 3ª: 41–60 km/h
-  - 4ª: 61–80 km/h
-  - 5ª: 81–100 km/h
-  - 6ª: 101–120 km/h
-- Não é permitido pular marchas
-- Só pode virar esquerda/direita entre **1 e 40 km/h**
-- Só pode desligar em ponto morto e velocidade 0
-
-### Arquitetura do Projeto (Clean Architecture)
+O projeto segue uma arquitetura limpa (Clean Architecture) para deixar tudo bem separado:
 
 ```
 src/main/java/br/com/zpx/car/
-├── domain/          → Entidade Car (estado puro)
-├── config/          → Constantes do simulador
-├── exception/       → Exceções personalizadas
-├── service/         → Interface + Implementação (lógica + logging)
-└── presentation/    → DemoConsole (exemplo de uso manual)
+├── domain/          → A classe Car (guarda apenas o estado do carro)
+├── config/          → Constantes (limites de velocidade, etc.)
+├── exception/       → Mensagens de erro personalizadas
+├── service/         → Lógica principal + logs
+└── presentation/    → DemoConsole (exemplo de uso no terminal)
 ```
 
-### Tecnologias e Boas Práticas
+## Como rodar o projeto
 
-- **Java 17**
-- **Maven** (build e dependências)
-- **SLF4J + simple** (logging com níveis INFO/WARN/ERROR)
-- **JUnit 5** (testes unitários)
-- **JaCoCo** (cobertura de testes)
-- Injeção de dependências manual
-- Programação para interfaces
-- Exceções personalizadas
-- Constantes centralizadas
+1. Clone o repositório:
 
-### Cobertura de Testes (JaCoCo)
+   ```bash
+   git clone https://github.com/seu-usuario/car-simulator.git
+   cd car-simulator
+   ```
 
-![alt text](image.png)
+2. Rode os testes (recomendado):
 
-> Gerado com `mvn clean test jacoco:report`
+   ```bash
+   mvn clean test
+   ```
 
-### Como Executar
+3. Execute a demonstração no console:
+   ```bash
+   mvn exec:java -Dexec.mainClass="br.com.zpx.car.presentation.DemoConsole"
+   ```
+
+Você verá mensagens como:
+
+```
+[INFO] Carro ligado com sucesso!
+[INFO] Acelerando... Velocidade atual: 15 km/h
+[INFO] Trocando para 2ª marcha
+[INFO] Vruuum! Virando à esquerda
+```
+
+Siga as instruções na tela para controlar o carro!
+
+## Testes e cobertura
+
+Todos os comportamentos importantes estão cobertos por testes unitários.  
+A cobertura é alta (próxima de 100% nas partes críticas).
+
+Para gerar o relatório localmente:
 
 ```bash
-# Rodar testes unitários
-mvn clean test
-
-# Executar demo no console
-mvn exec:java -Dexec.mainClass="br.com.zpx.car.presentation.DemoConsole"
+mvn clean test jacoco:report
 ```
 
-### Exemplo de Logs (demo console)
-
-```
-[main] INFO  br.com.zpx.car.service.CarServiceImpl - Carro ligado com sucesso!
-[main] INFO  br.com.zpx.car.service.CarServiceImpl - Acelerando... Velocidade atual: 15 km/h
-[main] INFO  br.com.zpx.car.service.CarServiceImpl - Trocando para 2ª marcha
-[main] INFO  br.com.zpx.car.service.CarServiceImpl - Vruuum! Virando à esquerda
-```
-
-**Projeto feito com dedicação como parte da jornada de aprendizado em Java backend.**
-
-Feedback e sugestões são bem-vindos! 🚀
+Depois abra o arquivo: `target/site/jacoco/index.html`
